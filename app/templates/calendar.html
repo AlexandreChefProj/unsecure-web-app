@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Calendar</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="calendar-container">
+        <h2>Course Calendar</h2>
+        
+        {% if 'user' in session and session['user'] == 'admin' %}
+            <!-- Only show the "Add Course" form if the user is an admin -->
+            <form method="POST" action="/calendar">
+                <input type="text" name="course_name" placeholder="Course Name" required>
+                <input type="text" name="course_description" placeholder="Course Description" required>
+                <button type="submit">Add Course</button>
+            </form>
+        {% endif %}
+        
+        <div class="courses">
+            {% for course in courses %}
+                <div class="course-card">
+                    <h3>{{ course[0] }}</h3>
+                    <p>{{ course[1] }}</p>
+                    
+                    {% if 'user' in session and session['user'] == 'admin' %}
+                        <!-- Only show the "Delete" button if the user is an admin -->
+                        <form method="POST" action="/delete_course/{{ course[0] }}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <a href="/dashboard">Back to Dashboard</a>
+    </div>
+</body>
+</html>
