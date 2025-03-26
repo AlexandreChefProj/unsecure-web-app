@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Admin Panel</h2>
+    <h3>All Posts</h3>
+    {% for post in posts %}
+        <div class="admin-post">
+            <p>{{ post.content }} - By {{ post.author.username }}</p>
+            <!-- Add delete functionality here -->
+        </div>
+    {% endfor %}
+{% endblock %}
